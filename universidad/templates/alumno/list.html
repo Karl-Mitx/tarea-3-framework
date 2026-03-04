@@ -1,11 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <h1>Pantalla CRUD de Alumnos</h1>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}Alumnos | JP University{% endblock %}
+{% block page_title %}Alumnos{% endblock %}
+
+{% block content %}
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title mb-3">Listado de Alumnos</h5>
+
+        {% if alumnos %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+
+            </table>
+            <tbody>
+                    {% for alumno in alumnos %}
+    <p>
+        {{ alumno.first_name }} -
+        {{ alumno.last_name }} -
+        {{ alumno.email }}
+    </p>
+{% empty %}
+    <p>No hay alumnos.</p>
+{% endfor %}
+                </tbody>
+        {% else %}
+            <div class="alert alert-info">
+                No hay alumnos registrados.
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
