@@ -44,3 +44,10 @@ class InscripcionAlumno(models.Model):
 
     class Meta:
         db_table = 'inscripcion_alumno'
+
+class Nota(models.Model):
+    inscripcion_alumno = models.ForeignKey(InscripcionAlumno, on_delete=models.CASCADE)
+    nota = models.DecimalField(max_digits=5, decimal_places=2)
+
+    class Meta:
+        db_table = 'nota'
