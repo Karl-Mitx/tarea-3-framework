@@ -21,3 +21,14 @@ class Catedratico(models.Model):
 
     class Meta:
         db_table = 'catedratico'
+
+class AsignacionCurso(models.Model):
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
+    catedratico = models.ForeignKey(Catedratico, on_delete=models.CASCADE)
+    horario = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.curso.nombre} - {self.catedratico.primer_nombre} {self.catedratico.segundo_nombre}"
+
+    class Meta:
+        db_table = 'asignacion_curso'
