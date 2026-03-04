@@ -1,5 +1,8 @@
 from django.db import models
 
+from universidad.Models.Alumno.models import Alumno
+
+
 class Curso(models.Model):
     nombre = models.CharField(max_length=150)
     codigo = models.CharField(max_length=20, unique=True)
@@ -32,3 +35,12 @@ class AsignacionCurso(models.Model):
 
     class Meta:
         db_table = 'asignacion_curso'
+
+
+class InscripcionAlumno(models.Model):
+    alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
+    asignacion_curso = models.ForeignKey(AsignacionCurso, on_delete=models.CASCADE)
+    fecha_inscripcion = models.DateField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'inscripcion_alumno'
