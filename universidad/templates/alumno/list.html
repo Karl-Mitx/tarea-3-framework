@@ -4,38 +4,57 @@
 {% block page_title %}Alumnos{% endblock %}
 
 {% block content %}
+<style>
+    .tabla-alumnos {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+    .tabla-alumnos th,
+    .tabla-alumnos td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    .tabla-alumnos th {
+        background-color: #f4f4f4;
+    }
+
+    .tabla-alumnos tr:nth-child(even) {
+        background-color: #fafafa;
+    }
+</style>
 
 <div class="card shadow-sm">
     <div class="card-body">
         <h5 class="card-title mb-3">Listado de Alumnos</h5>
 
         {% if alumnos %}
-            <table class="table table-hover">
+            <table class="tabla-alumnos">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
                     </tr>
                 </thead>
-
-            </table>
-            <tbody>
+                <tbody>
                     {% for alumno in alumnos %}
-    <p>
-        {{ alumno.first_name }} -
-        {{ alumno.last_name }} -
-        {{ alumno.email }}
-    </p>
-{% empty %}
-    <p>No hay alumnos.</p>
-{% endfor %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ alumno.first_name }}</td>
+                            <td>{{ alumno.last_name }}</td>
+                            <td>{{ alumno.email }}</td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
+            </table>
         {% else %}
-            <div class="alert alert-info">
-                No hay alumnos registrados.
-            </div>
+            <p>No hay alumnos registrados.</p>
         {% endif %}
     </div>
 </div>
-
 {% endblock %}
