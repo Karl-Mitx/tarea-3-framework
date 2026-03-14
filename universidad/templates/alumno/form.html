@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} | JP University{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<style>
+    .formulario-alumno {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .campo {
+        margin-bottom: 15px;
+    }
+
+    .campo label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: bold;
+    }
+
+    .acciones {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 8px 14px;
+        text-decoration: none;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .btn-guardar {
+        background-color: #198754;
+        color: white;
+    }
+
+    .btn-cancelar {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .errorlist {
+        color: #dc3545;
+        margin: 5px 0 0;
+        padding-left: 18px;
+    }
+</style>
+
+<div class="card shadow-sm formulario-alumno">
+    <div class="card-body">
+        <h5 class="card-title mb-3">{{ title }}</h5>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="campo">
+                <label for="{{ form.first_name.id_for_label }}">Nombre</label>
+                {{ form.first_name }}
+                {{ form.first_name.errors }}
+            </div>
+
+            <div class="campo">
+                <label for="{{ form.last_name.id_for_label }}">Apellido</label>
+                {{ form.last_name }}
+                {{ form.last_name.errors }}
+            </div>
+
+            <div class="campo">
+                <label for="{{ form.email.id_for_label }}">Email</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+
+            <div class="campo">
+                <label for="{{ form.phone.id_for_label }}">Teléfono</label>
+                {{ form.phone }}
+                {{ form.phone.errors }}
+            </div>
+
+            <div class="campo">
+                <label for="{{ form.gender.id_for_label }}">Género</label>
+                {{ form.gender }}
+                {{ form.gender.errors }}
+            </div>
+
+            <div class="campo">
+                <label for="{{ form.birth_date.id_for_label }}">Fecha de nacimiento</label>
+                {{ form.birth_date }}
+                {{ form.birth_date.errors }}
+            </div>
+
+            <div class="campo">
+                <label for="{{ form.is_active.id_for_label }}">Activo</label>
+                {{ form.is_active }}
+                {{ form.is_active.errors }}
+            </div>
+
+            <div class="acciones">
+                <button type="submit" class="btn btn-guardar">Guardar</button>
+                <a href="{% url 'alumno:list' %}" class="btn btn-cancelar">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
