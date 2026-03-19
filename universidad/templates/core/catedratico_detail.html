@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle del Catedrático | JP University{% endblock %}
+{% block page_title %}Detalle del Catedrático{% endblock %}
+
+{% block content %}
+<style>
+    .detalle-catedratico {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .dato {
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .dato strong {
+        display: inline-block;
+        width: 180px;
+    }
+
+    .acciones {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 8px 14px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .btn-volver {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-editar {
+        background-color: #ffc107;
+        color: black;
+    }
+
+    .btn-eliminar {
+        background-color: #dc3545;
+        color: white;
+    }
+</style>
+
+<div class="card shadow-sm detalle-catedratico">
+    <div class="card-body">
+        <h5 class="card-title mb-3">{{ catedratico.primer_nombre }} {{ catedratico.segundo_nombre }}</h5>
+
+        <div class="dato">
+            <strong>Primer nombre:</strong> {{ catedratico.primer_nombre }}
+        </div>
+        <div class="dato">
+            <strong>Segundo nombre:</strong> {{ catedratico.segundo_nombre }}
+        </div>
+        <div class="dato">
+            <strong>Email:</strong> {{ catedratico.email }}
+        </div>
+
+        <div class="acciones">
+            <a href="{% url 'core:catedraticos' %}" class="btn btn-volver">Volver</a>
+            <a href="{% url 'core:catedratico_edit' catedratico.pk %}" class="btn btn-editar">Editar</a>
+            <a href="{% url 'core:catedratico_delete' catedratico.pk %}" class="btn btn-eliminar">Eliminar</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

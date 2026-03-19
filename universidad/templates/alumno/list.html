@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
-{% block title %}Alumnos | JP University{% endblock %}
-{% block page_title %}Alumnos{% endblock %}
+{% block title %}{% block crud_title %}Alumnos | JP University{% endblock %}{% endblock %}
+{% block page_title %}{% block crud_page_title %}Alumnos{% endblock %}{% endblock %}
 
 {% block content %}
 <style>
@@ -64,15 +64,18 @@
 
 <div class="card shadow-sm">
     <div class="card-body">
-        <h5 class="card-title mb-3">Listado de Alumnos</h5>
+        <h5 class="card-title mb-3">{% block crud_heading %}Listado de Alumnos{% endblock %}</h5>
 
+        {% block crud_add_button %}
         <a href="{% url 'alumno:create' %}" class="btn btn-agregar">+ Añadir Alumno</a>
+        {% endblock %}
 
+        {% block crud_table %}
         {% if alumnos %}
             <table class="tabla-alumnos">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>Numero</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
                         <th>Email</th>
@@ -100,6 +103,7 @@
         {% else %}
             <p>No hay alumnos registrados.</p>
         {% endif %}
+        {% endblock %}
     </div>
 </div>
 {% endblock %}

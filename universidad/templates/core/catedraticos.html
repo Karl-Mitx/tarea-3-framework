@@ -1,11 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <h1>Pantalla CRUD de Catedraticos</h1>
-</head>
-<body>
+{% extends 'alumno/list.html' %}
 
-</body>
-</html>
+{% block crud_title %}Catedráticos | JP University{% endblock %}
+{% block crud_page_title %}Catedráticos{% endblock %}
+{% block crud_heading %}Listado de Catedráticos{% endblock %}
+
+{% block crud_add_button %}
+<a href="{% url 'core:catedratico_create' %}" class="btn btn-agregar">+ Añadir Catedrático</a>
+{% endblock %}
+
+{% block crud_table %}
+{% if catedraticos %}
+    <table class="tabla-alumnos">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Primer nombre</th>
+                <th>Segundo nombre</th>
+                <th>Email</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for catedratico in catedraticos %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ catedratico.primer_nombre }}</td>
+                    <td>{{ catedratico.segundo_nombre }}</td>
+                    <td>{{ catedratico.email }}</td>
+                    <td>
+                        <div class="acciones">
+                            <a href="{% url 'core:catedratico_detail' catedratico.pk %}" class="btn btn-ver">Ver</a>
+                            <a href="{% url 'core:catedratico_edit' catedratico.pk %}" class="btn btn-editar">Editar</a>
+                            <a href="{% url 'core:catedratico_delete' catedratico.pk %}" class="btn btn-eliminar">Eliminar</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No hay catedráticos registrados.</p>
+{% endif %}
+{% endblock %}

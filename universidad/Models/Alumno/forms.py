@@ -13,8 +13,6 @@ class AlumnoForm(forms.ModelForm):
             'birth_date',
             'is_active',
         ]
-        # id → auto, no se incluye
-        # enrolled_at → auto_now_add=True, no se incluye
 
         widgets = {
             'first_name': forms.TextInput(attrs={

@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle del Alumno | JP University{% endblock %}
+{% block page_title %}Detalle del Alumno{% endblock %}
+
+{% block content %}
+<style>
+    .detalle-alumno {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .dato {
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .dato strong {
+        display: inline-block;
+        width: 180px;
+    }
+
+    .acciones {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 8px 14px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .btn-volver {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-editar {
+        background-color: #ffc107;
+        color: black;
+    }
+
+    .btn-eliminar {
+        background-color: #dc3545;
+        color: white;
+    }
+</style>
+
+<div class="card shadow-sm detalle-alumno">
+    <div class="card-body">
+        <h5 class="card-title mb-3">{{ alumno.first_name }} {{ alumno.last_name }}</h5>
+
+        <div class="dato">
+            <strong>Nombre:</strong> {{ alumno.first_name }}
+        </div>
+        <div class="dato">
+            <strong>Apellido:</strong> {{ alumno.last_name }}
+        </div>
+        <div class="dato">
+            <strong>Email:</strong> {{ alumno.email }}
+        </div>
+        <div class="dato">
+            <strong>Teléfono:</strong> {{ alumno.phone|default:"No registrado" }}
+        </div>
+        <div class="dato">
+            <strong>Género:</strong> {{ alumno.gender }}
+        </div>
+        <div class="dato">
+            <strong>Fecha de nacimiento:</strong> {{ alumno.birth_date }}
+        </div>
+        <div class="dato">
+            <strong>Estado:</strong>
+            {% if alumno.is_active %}
+                Activo
+            {% else %}
+                Inactivo
+            {% endif %}
+        </div>
+
+        <div class="acciones">
+            <a href="{% url 'alumno:list' %}" class="btn btn-volver">Volver</a>
+            <a href="{% url 'alumno:edit' alumno.pk %}" class="btn btn-editar">Editar</a>
+            <a href="{% url 'alumno:delete' alumno.pk %}" class="btn btn-eliminar">Eliminar</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
