@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}Cursos | JP University{% endblock %}
+{% block page_title %}Cursos{% endblock %}
+
+{% block content %}
+<style>
+    .tabla-cursos {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+    .tabla-cursos th,
+    .tabla-cursos td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    .tabla-cursos th {
+        background-color: #f4f4f4;
+    }
+
+    .tabla-cursos tr:nth-child(even) {
+        background-color: #fafafa;
+    }
+
+    .acciones {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 6px 12px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .btn-agregar {
+        background-color: #198754;
+        color: white;
+        margin-bottom: 15px;
+    }
+
+    .btn-ver {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+    .btn-editar {
+        background-color: #ffc107;
+        color: black;
+    }
+
+    .btn-eliminar {
+        background-color: #dc3545;
+        color: white;
+    }
+</style>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title mb-3">Listado de Cursos</h5>
+
+        <a href="{% url 'core:curso_create' %}" class="btn btn-agregar">+ Añadir Curso</a>
+
+        {% if cursos %}
+            <table class="tabla-cursos">
+                <thead>
+                    <tr>
+                        <th>Numero</th>
+                        <th>Nombre</th>
+                        <th>Código</th>
+                        <th>Créditos</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for curso in cursos %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ curso.nombre }}</td>
+                            <td>{{ curso.codigo }}</td>
+                            <td>{{ curso.creditos }}</td>
+                            <td>
+                                <div class="acciones">
+                                    <a href="{% url 'core:curso_detail' curso.pk %}" class="btn btn-ver">Ver</a>
+                                    <a href="{% url 'core:curso_edit' curso.pk %}" class="btn btn-editar">Editar</a>
+                                    <a href="{% url 'core:curso_delete' curso.pk %}" class="btn btn-eliminar">Eliminar</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No hay cursos registrados.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

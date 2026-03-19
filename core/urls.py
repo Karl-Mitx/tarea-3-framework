@@ -5,7 +5,12 @@ app_name = 'core'
 
 urlpatterns = [
     path('', views.dashboard, name='dashboard'),
+
     path('cursos/', views.cursos_view, name='cursos'),
+    path('cursos/crear/', views.curso_create, name='curso_create'),
+    path('cursos/<int:pk>/', views.curso_detail, name='curso_detail'),
+    path('cursos/<int:pk>/editar/', views.curso_edit, name='curso_edit'),
+    path('cursos/<int:pk>/eliminar/', views.curso_delete, name='curso_delete'),
 
     path('catedraticos/', views.catedraticos_view, name='catedraticos'),
     path('catedraticos/crear/', views.catedratico_create, name='catedratico_create'),

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle del Curso | JP University{% endblock %}
+{% block page_title %}Detalle del Curso{% endblock %}
+
+{% block content %}
+<style>
+    .detalle-curso {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .dato {
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .dato strong {
+        display: inline-block;
+        width: 180px;
+    }
+
+    .acciones {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 8px 14px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .btn-volver {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-editar {
+        background-color: #ffc107;
+        color: black;
+    }
+
+    .btn-eliminar {
+        background-color: #dc3545;
+        color: white;
+    }
+</style>
+
+<div class="card shadow-sm detalle-curso">
+    <div class="card-body">
+        <h5 class="card-title mb-3">{{ curso.nombre }}</h5>
+
+        <div class="dato">
+            <strong>Nombre:</strong> {{ curso.nombre }}
+        </div>
+        <div class="dato">
+            <strong>Código:</strong> {{ curso.codigo }}
+        </div>
+        <div class="dato">
+            <strong>Créditos:</strong> {{ curso.creditos }}
+        </div>
+
+        <div class="acciones">
+            <a href="{% url 'core:cursos' %}" class="btn btn-volver">Volver</a>
+            <a href="{% url 'core:curso_edit' curso.pk %}" class="btn btn-editar">Editar</a>
+            <a href="{% url 'core:curso_delete' curso.pk %}" class="btn btn-eliminar">Eliminar</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

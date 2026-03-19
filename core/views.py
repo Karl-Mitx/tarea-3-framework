@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 
 from universidad.Models.Alumno.models import Alumno
-from .models import Catedratico
-from .forms import CatedraticoForm
+from .models import Catedratico, Curso
+from .forms import CatedraticoForm, CursoForm
 
 
 def dashboard(request):
@@ -17,7 +17,49 @@ def dashboard(request):
 
 
 def cursos_view(request):
-    return render(request, 'core/cursos.html')
+    cursos = Curso.objects.all()
+    return render(request, 'core/cursos_list.html', {'cursos': cursos})
+
+
+def curso_create(request):
+    form = CursoForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Curso registrado correctamente.')
+        return redirect('core:cursos')
+    return render(request, 'core/cursos.html', {
+        'form': form,
+        'title': 'Nuevo Curso'
+    })
+
+
+def curso_detail(request, pk):
+    curso = get_object_or_404(Curso, pk=pk)
+    return render(request, 'core/cursos_detail.html', {'curso': curso})
+
+
+def curso_edit(request, pk):
+    curso = get_object_or_404(Curso, pk=pk)
+    form = CursoForm(request.POST or None, instance=curso)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Curso actualizado correctamente.')
+        return redirect('core:cursos')
+    return render(request, 'core/cursos.html', {
+        'form': form,
+        'title': 'Editar Curso'
+    })
+
+
+def curso_delete(request, pk):
+    curso = get_object_or_404(Curso, pk=pk)
+    if request.method == 'POST':
+        curso.delete()
+        messages.success(request, 'Curso eliminado correctamente.')
+        return redirect('core:cursos')
+    return render(request, 'core/cursos_confirm_delete.html', {
+        'curso': curso
+    })
 
 
 def catedraticos_view(request):
