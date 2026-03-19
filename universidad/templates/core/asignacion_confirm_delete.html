@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Asignación | JP University{% endblock %}
+{% block page_title %}Eliminar Asignación{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm" style="max-width: 600px; margin: 0 auto; text-align: center;">
+    <div class="card-body">
+        <h5 class="card-title mb-3">¿Eliminar asignación?</h5>
+        <p>
+            Vas a eliminar <strong>{{ asignacion.curso.nombre }}</strong>
+            con <strong>{{ asignacion.catedratico.primer_nombre }} {{ asignacion.catedratico.segundo_nombre }}</strong>.
+        </p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+            <a href="{% url 'core:asignaciones' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

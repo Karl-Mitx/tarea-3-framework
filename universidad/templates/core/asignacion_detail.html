@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle de Asignación | JP University{% endblock %}
+{% block page_title %}Detalle de Asignación{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm" style="max-width: 700px; margin: 0 auto;">
+    <div class="card-body">
+        <h5 class="card-title mb-3">Detalle de Asignación</h5>
+
+        <p><strong>Curso:</strong> {{ asignacion.curso.nombre }}</p>
+        <p><strong>Catedrático:</strong> {{ asignacion.catedratico.primer_nombre }} {{ asignacion.catedratico.segundo_nombre }}</p>
+        <p><strong>Horario:</strong> {{ asignacion.horario }}</p>
+
+        <a href="{% url 'core:asignaciones' %}" class="btn btn-secondary">Volver</a>
+    </div>
+</div>
+{% endblock %}

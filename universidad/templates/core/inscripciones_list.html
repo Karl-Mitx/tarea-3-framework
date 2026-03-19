@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}Inscripciones | JP University{% endblock %}
+{% block page_title %}Inscripciones{% endblock %}
+
+{% block content %}
+<style>
+    .tabla-inscripciones {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+    .tabla-inscripciones th,
+    .tabla-inscripciones td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    .tabla-inscripciones th {
+        background-color: #f4f4f4;
+    }
+
+    .tabla-inscripciones tr:nth-child(even) {
+        background-color: #fafafa;
+    }
+
+    .acciones {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 6px 12px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .btn-agregar {
+        background-color: #198754;
+        color: white;
+        margin-bottom: 15px;
+    }
+
+    .btn-ver {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+    .btn-editar {
+        background-color: #ffc107;
+        color: black;
+    }
+
+    .btn-eliminar {
+        background-color: #dc3545;
+        color: white;
+    }
+</style>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title mb-3">Listado de Inscripciones</h5>
+
+        <a href="{% url 'core:inscripcion_create' %}" class="btn btn-agregar">+ Añadir Inscripción</a>
+
+        {% if inscripciones %}
+            <table class="tabla-inscripciones">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Alumno</th>
+                        <th>Curso</th>
+                        <th>Fecha</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for inscripcion in inscripciones %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ inscripcion.alumno.first_name }} {{ inscripcion.alumno.last_name }}</td>
+                            <td>{{ inscripcion.asignacion_curso.curso.nombre }}</td>
+                            <td>{{ inscripcion.fecha_inscripcion }}</td>
+                            <td>
+                                <div class="acciones">
+                                    <a href="{% url 'core:inscripcion_detail' inscripcion.pk %}" class="btn btn-ver">Ver</a>
+                                    <a href="{% url 'core:inscripcion_edit' inscripcion.pk %}" class="btn btn-editar">Editar</a>
+                                    <a href="{% url 'core:inscripcion_delete' inscripcion.pk %}" class="btn btn-eliminar">Eliminar</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No hay inscripciones registradas.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

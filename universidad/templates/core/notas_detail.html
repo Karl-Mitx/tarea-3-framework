@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle de Nota | JP University{% endblock %}
+{% block page_title %}Detalle de Nota{% endblock %}
+
+{% block content %}
+<style>
+    .detalle-nota {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .dato {
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .dato strong {
+        display: inline-block;
+        width: 180px;
+    }
+
+    .acciones {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 8px 14px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .btn-volver {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-editar {
+        background-color: #ffc107;
+        color: black;
+    }
+
+    .btn-eliminar {
+        background-color: #dc3545;
+        color: white;
+    }
+</style>
+
+<div class="card shadow-sm detalle-nota">
+    <div class="card-body">
+        <h5 class="card-title mb-3">Detalle de Nota</h5>
+
+        <div class="dato">
+            <strong>Alumno:</strong>
+            {{ nota.inscripcion_alumno.alumno.first_name }} {{ nota.inscripcion_alumno.alumno.last_name }}
+        </div>
+        <div class="dato">
+            <strong>Curso:</strong>
+            {{ nota.inscripcion_alumno.asignacion_curso.curso.nombre }}
+        </div>
+        <div class="dato">
+            <strong>Nota:</strong> {{ nota.nota }}
+        </div>
+
+        <div class="acciones">
+            <a href="{% url 'core:notas' %}" class="btn btn-volver">Volver</a>
+            <a href="{% url 'core:nota_edit' nota.pk %}" class="btn btn-editar">Editar</a>
+            <a href="{% url 'core:nota_delete' nota.pk %}" class="btn btn-eliminar">Eliminar</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

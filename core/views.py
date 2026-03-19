@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 
 from universidad.Models.Alumno.models import Alumno
-from .models import Catedratico, Curso
-from .forms import CatedraticoForm, CursoForm
+from .models import Catedratico, Curso, Nota, InscripcionAlumno, AsignacionCurso
+from .forms import CatedraticoForm, CursoForm, NotaForm, InscripcionAlumnoForm, AsignacionCursoForm
 
 
 def dashboard(request):
@@ -107,10 +107,137 @@ def catedratico_delete(request, pk):
         'catedratico': catedratico
     })
 
+def notas_view(request):
+    notas = Nota.objects.all()
+    return render(request, 'core/notas_list.html', {'notas': notas})
+
+
+def nota_create(request):
+    form = NotaForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Nota registrada correctamente.')
+        return redirect('core:notas')
+    return render(request, 'core/notas.html', {
+        'form': form,
+        'title': 'Nueva Nota'
+    })
+
+
+def nota_detail(request, pk):
+    nota = get_object_or_404(Nota, pk=pk)
+    return render(request, 'core/notas_detail.html', {'nota': nota})
+
+
+def nota_edit(request, pk):
+    nota = get_object_or_404(Nota, pk=pk)
+    form = NotaForm(request.POST or None, instance=nota)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Nota actualizada correctamente.')
+        return redirect('core:notas')
+    return render(request, 'core/notas.html', {
+        'form': form,
+        'title': 'Editar Nota'
+    })
+
+
+def nota_delete(request, pk):
+    nota = get_object_or_404(Nota, pk=pk)
+    if request.method == 'POST':
+        nota.delete()
+        messages.success(request, 'Nota eliminada correctamente.')
+        return redirect('core:notas')
+    return render(request, 'core/notas_confirm_delete.html', {
+        'nota': nota
+    })
 
 def inscripciones_view(request):
-    return render(request, 'core/inscripciones.html')
+    inscripciones = InscripcionAlumno.objects.all()
+    return render(request, 'core/inscripciones_list.html', {'inscripciones': inscripciones})
 
 
-def notas_view(request):
-    return render(request, 'core/notas.html')
+def inscripcion_create(request):
+    form = InscripcionAlumnoForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Inscripción registrada correctamente.')
+        return redirect('core:inscripciones')
+    return render(request, 'core/inscripciones.html', {
+        'form': form,
+        'title': 'Nueva Inscripción'
+    })
+
+
+def inscripcion_detail(request, pk):
+    inscripcion = get_object_or_404(InscripcionAlumno, pk=pk)
+    return render(request, 'core/inscripcion_detail.html', {'inscripcion': inscripcion})
+
+
+def inscripcion_edit(request, pk):
+    inscripcion = get_object_or_404(InscripcionAlumno, pk=pk)
+    form = InscripcionAlumnoForm(request.POST or None, instance=inscripcion)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Inscripción actualizada correctamente.')
+        return redirect('core:inscripciones')
+    return render(request, 'core/inscripciones.html', {
+        'form': form,
+        'title': 'Editar Inscripción'
+    })
+
+
+def inscripcion_delete(request, pk):
+    inscripcion = get_object_or_404(InscripcionAlumno, pk=pk)
+    if request.method == 'POST':
+        inscripcion.delete()
+        messages.success(request, 'Inscripción eliminada correctamente.')
+        return redirect('core:inscripciones')
+    return render(request, 'core/inscripcion_confirm_delete.html', {
+        'inscripcion': inscripcion
+    })
+
+def asignaciones_view(request):
+    asignaciones = AsignacionCurso.objects.all()
+    return render(request, 'core/asignaciones_list.html', {'asignaciones': asignaciones})
+
+
+def asignacion_create(request):
+    form = AsignacionCursoForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Asignación registrada correctamente.')
+        return redirect('core:asignaciones')
+    return render(request, 'core/asignacion_form.html', {
+        'form': form,
+        'title': 'Nueva Asignación'
+    })
+
+
+def asignacion_detail(request, pk):
+    asignacion = get_object_or_404(AsignacionCurso, pk=pk)
+    return render(request, 'core/asignacion_detail.html', {'asignacion': asignacion})
+
+
+def asignacion_edit(request, pk):
+    asignacion = get_object_or_404(AsignacionCurso, pk=pk)
+    form = AsignacionCursoForm(request.POST or None, instance=asignacion)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Asignación actualizada correctamente.')
+        return redirect('core:asignaciones')
+    return render(request, 'core/asignacion_form.html', {
+        'form': form,
+        'title': 'Editar Asignación'
+    })
+
+
+def asignacion_delete(request, pk):
+    asignacion = get_object_or_404(AsignacionCurso, pk=pk)
+    if request.method == 'POST':
+        asignacion.delete()
+        messages.success(request, 'Asignación eliminada correctamente.')
+        return redirect('core:asignaciones')
+    return render(request, 'core/asignacion_confirm_delete.html', {
+        'asignacion': asignacion
+    })

@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}Notas | JP University{% endblock %}
+{% block page_title %}Notas{% endblock %}
+
+{% block content %}
+<style>
+    .tabla-notas {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+    .tabla-notas th,
+    .tabla-notas td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    .tabla-notas th {
+        background-color: #f4f4f4;
+    }
+
+    .tabla-notas tr:nth-child(even) {
+        background-color: #fafafa;
+    }
+
+    .acciones {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 6px 12px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .btn-agregar {
+        background-color: #198754;
+        color: white;
+        margin-bottom: 15px;
+    }
+
+    .btn-ver {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+    .btn-editar {
+        background-color: #ffc107;
+        color: black;
+    }
+
+    .btn-eliminar {
+        background-color: #dc3545;
+        color: white;
+    }
+</style>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title mb-3">Listado de Notas</h5>
+
+        <a href="{% url 'core:nota_create' %}" class="btn btn-agregar">+ Añadir Nota</a>
+
+        {% if notas %}
+            <table class="tabla-notas">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Alumno</th>
+                        <th>Curso</th>
+                        <th>Nota</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for nota in notas %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ nota.inscripcion_alumno.alumno.first_name }} {{ nota.inscripcion_alumno.alumno.last_name }}</td>
+                            <td>{{ nota.inscripcion_alumno.asignacion_curso.curso.nombre }}</td>
+                            <td>{{ nota.nota }}</td>
+                            <td>
+                                <div class="acciones">
+                                    <a href="{% url 'core:nota_detail' nota.pk %}" class="btn btn-ver">Ver</a>
+                                    <a href="{% url 'core:nota_edit' nota.pk %}" class="btn btn-editar">Editar</a>
+                                    <a href="{% url 'core:nota_delete' nota.pk %}" class="btn btn-eliminar">Eliminar</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No hay notas registradas.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

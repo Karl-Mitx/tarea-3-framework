@@ -1,11 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <h1>Pantalla CRUD de Inscripciones</h1>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}{{ title }} | JP University{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<style>
+    .formulario-inscripcion {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .campo {
+        margin-bottom: 15px;
+    }
+
+    .campo label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: bold;
+    }
+
+    .acciones {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 8px 14px;
+        text-decoration: none;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .btn-guardar {
+        background-color: #198754;
+        color: white;
+    }
+
+    .btn-cancelar {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .errorlist {
+        color: #dc3545;
+        margin: 5px 0 0;
+        padding-left: 18px;
+    }
+</style>
+
+<div class="card shadow-sm formulario-inscripcion">
+    <div class="card-body">
+        <h5 class="card-title mb-3">{{ title }}</h5>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="campo">
+                <label for="{{ form.alumno.id_for_label }}">Alumno</label>
+                {{ form.alumno }}
+                {{ form.alumno.errors }}
+            </div>
+
+            <div class="campo">
+                <label for="{{ form.asignacion_curso.id_for_label }}">Curso asignado</label>
+                {{ form.asignacion_curso }}
+                {{ form.asignacion_curso.errors }}
+            </div>
+
+            <div class="acciones">
+                <button type="submit" class="btn btn-guardar">Guardar</button>
+                <a href="{% url 'core:inscripciones' %}" class="btn btn-cancelar">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

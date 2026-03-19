@@ -193,6 +193,16 @@
     <i class="bi bi-journal-bookmark-fill"></i> Cursos
         </a>
 
+    <a href="{% url 'core:inscripciones' %}"
+       class="nav-link {% if request.resolver_match.url_name == 'inscripciones' %}active{% endif %}">
+        <i class="bi bi-clipboard2-check-fill"></i> Inscripciones
+    </a>
+
+    <a href="{% url 'core:asignaciones' %}"
+   class="nav-link {% if request.resolver_match.url_name == 'asignaciones' %}active{% endif %}">
+    <i class="bi bi-link-45deg"></i> Asignaciones
+</a>
+
         <a href="{% url 'core:notas' %}"
    class="nav-link {% if request.resolver_match.url_name == 'notas' %}active{% endif %}">
     <i class="bi bi-clipboard2-check-fill"></i> Notas

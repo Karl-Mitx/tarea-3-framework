@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Asignaciones | JP University{% endblock %}
+{% block page_title %}Asignaciones{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title mb-3">Listado de Asignaciones</h5>
+
+        <a href="{% url 'core:asignacion_create' %}" class="btn btn-success mb-3">+ Añadir Asignación</a>
+
+        {% if asignaciones %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Curso</th>
+                        <th>Catedrático</th>
+                        <th>Horario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for asignacion in asignaciones %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ asignacion.curso.nombre }}</td>
+                            <td>{{ asignacion.catedratico.primer_nombre }} {{ asignacion.catedratico.segundo_nombre }}</td>
+                            <td>{{ asignacion.horario }}</td>
+                            <td>
+                                <a class="btn btn-primary btn-sm" href="{% url 'core:asignacion_detail' asignacion.pk %}">Ver</a>
+                                <a class="btn btn-warning btn-sm" href="{% url 'core:asignacion_edit' asignacion.pk %}">Editar</a>
+                                <a class="btn btn-danger btn-sm" href="{% url 'core:asignacion_delete' asignacion.pk %}">Eliminar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No hay asignaciones registradas.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

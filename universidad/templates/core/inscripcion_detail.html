@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle de Inscripción | JP University{% endblock %}
+{% block page_title %}Detalle de Inscripción{% endblock %}
+
+{% block content %}
+<style>
+    .detalle-inscripcion {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .dato {
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .dato strong {
+        display: inline-block;
+        width: 180px;
+    }
+
+    .acciones {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 8px 14px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .btn-volver {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-editar {
+        background-color: #ffc107;
+        color: black;
+    }
+
+    .btn-eliminar {
+        background-color: #dc3545;
+        color: white;
+    }
+</style>
+
+<div class="card shadow-sm detalle-inscripcion">
+    <div class="card-body">
+        <h5 class="card-title mb-3">Detalle de Inscripción</h5>
+
+        <div class="dato">
+            <strong>Alumno:</strong> {{ inscripcion.alumno.first_name }} {{ inscripcion.alumno.last_name }}
+        </div>
+        <div class="dato">
+            <strong>Curso:</strong> {{ inscripcion.asignacion_curso.curso.nombre }}
+        </div>
+        <div class="dato">
+            <strong>Fecha:</strong> {{ inscripcion.fecha_inscripcion }}
+        </div>
+
+        <div class="acciones">
+            <a href="{% url 'core:inscripciones' %}" class="btn btn-volver">Volver</a>
+            <a href="{% url 'core:inscripcion_edit' inscripcion.pk %}" class="btn btn-editar">Editar</a>
+            <a href="{% url 'core:inscripcion_delete' inscripcion.pk %}" class="btn btn-eliminar">Eliminar</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
