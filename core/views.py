@@ -252,7 +252,7 @@ def reporte_inscripciones_nota(request):
     )
 
     alumnos_sin_nota = Alumno.objects.filter(
-        inscripcionalumno__nota__isnull=True
+        inscripcionalumno__isnull=True
     ).values(
         'first_name', 'last_name', 'email'
     ).annotate(
