@@ -59,9 +59,6 @@ class Command(BaseCommand):
                     first_name=f"Alumno{i}",
                     last_name=f"Prueba{i}",
                     email=f"alumno{i}@mail.com",
-                    phone=f"555{i:06d}",
-                    gender=random.choice(["M", "F"]),
-                    birth_date=date(2000, 1, 1) + timedelta(days=random.randint(0, 7000)),
                     is_active=random.choice([True, False]),
                 )
             )
