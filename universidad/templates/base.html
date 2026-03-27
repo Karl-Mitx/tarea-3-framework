@@ -208,6 +208,29 @@
     <i class="bi bi-clipboard2-check-fill"></i> Notas
         </a>
 
+    <div class="nav-section">Reportes</div>
+
+    <a class="nav-link"
+               data-bs-toggle="collapse"
+               href="#submenuReportes"
+               role="button"
+               aria-expanded="false"
+               aria-controls="submenuReportes">
+                <i class="bi bi-bar-chart-fill"></i> Reportes
+            </a>
+
+    <div class="collapse" id="submenuReportes" style="margin-left: 15px;">
+                <a href="{% url 'core:reporte_inscripciones_nota' %}"
+                   class="nav-link {% if request.resolver_match.url_name == 'reporte_inscripciones_nota' %}active{% endif %}">
+                    <i class="bi bi-file-earmark-text"></i> Alumnos con/sin nota
+                </a>
+
+                <a href="{% url 'core:reporte_cursos_asignados' %}"
+                   class="nav-link {% if request.resolver_match.url_name == 'reporte_cursos_asignados' %}active{% endif %}">
+                    <i class="bi bi-file-earmark-text"></i> Cursos asignados
+                </a>
+            </div>
+
         <div class="nav-section">Sistema</div>
         <a href="#" class="nav-link">
             <i class="bi bi-gear-fill"></i> Configuración
