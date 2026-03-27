@@ -35,4 +35,6 @@ urlpatterns = [
     path('notas/<int:pk>/', views.nota_detail, name='nota_detail'),
     path('notas/<int:pk>/editar/', views.nota_edit, name='nota_edit'),
     path('notas/<int:pk>/eliminar/', views.nota_delete, name='nota_delete'),
+    path('reportes/alumnos-notas/', views.reporte_inscripciones_nota, name='reporte_inscripciones_nota'),
+    path('reportes/cursos-asignados/', views.reporte_cursos_asignados, name='reporte_cursos_asignados'),
 ]

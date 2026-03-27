@@ -15,7 +15,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write(self.style.WARNING("Iniciando carga masiva de datos..."))
 
-        # Limpieza previa opcional
         Nota.objects.all().delete()
         InscripcionAlumno.objects.all().delete()
         AsignacionCurso.objects.all().delete()

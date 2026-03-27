@@ -1,10 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.db.models import Value, CharField
 
 from universidad.Models.Alumno.models import Alumno
 from .models import Catedratico, Curso, Nota, InscripcionAlumno, AsignacionCurso
 from .forms import CatedraticoForm, CursoForm, NotaForm, InscripcionAlumnoForm, AsignacionCursoForm
-
 
 def dashboard(request):
     context = {
@@ -240,4 +240,53 @@ def asignacion_delete(request, pk):
         return redirect('core:asignaciones')
     return render(request, 'core/asignacion_confirm_delete.html', {
         'asignacion': asignacion
+    })
+
+def reporte_inscripciones_nota(request):
+    alumnos_con_nota = Alumno.objects.filter(
+        inscripcionalumno__nota__isnull=False
+    ).values(
+        'first_name', 'last_name', 'email'
+    ).annotate(
+        tipo=Value('Con Nota', output_field=CharField())
+    )
+
+    alumnos_sin_nota = Alumno.objects.filter(
+        inscripcionalumno__nota__isnull=True
+    ).values(
+        'first_name', 'last_name', 'email'
+    ).annotate(
+        tipo=Value('Sin Nota', output_field=CharField())
+    )
+
+    reporte = alumnos_con_nota.union(alumnos_sin_nota).order_by('first_name', 'last_name')
+
+    return render(request, 'core/reportes/reporte_inscripciones_nota.html', {
+        'reporte': reporte,
+        'title': 'Reporte de Alumnos con y sin Nota',
+    })
+
+
+def reporte_cursos_asignados(request):
+    cursos_con_asignacion = Curso.objects.filter(
+        asignacioncurso__isnull=False
+    ).values(
+        'nombre', 'codigo'
+    ).annotate(
+        tipo=Value('Asignado', output_field=CharField())
+    )
+
+    cursos_sin_asignacion = Curso.objects.filter(
+        asignacioncurso__isnull=True
+    ).values(
+        'nombre', 'codigo'
+    ).annotate(
+        tipo=Value('Sin Asignar', output_field=CharField())
+    )
+
+    reporte = cursos_con_asignacion.union(cursos_sin_asignacion).order_by('nombre')
+
+    return render(request, 'core/reportes/reporte_cursos_asignados.html', {
+        'reporte': reporte,
+        'title': 'Reporte de Cursos Asignados / No Asignados',
     })
